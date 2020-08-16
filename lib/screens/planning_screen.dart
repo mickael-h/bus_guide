@@ -1,4 +1,4 @@
-import '../index.dart';
+import 'package:bus_guide/index.dart';
 
 class PlanningScreen extends StatelessWidget {
   @override
@@ -14,7 +14,8 @@ class PlanningScreen extends StatelessWidget {
 }
 
 class PlanningListView extends StatelessWidget {
-  final UserController _userController = Get.put(UserController());
+  final UserController _userController = Get.find<UserController>();
+  final PlanningController _planningController = Get.find<PlanningController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +44,7 @@ class PlanningListView extends StatelessWidget {
         title: 'New line number',
         content: TextField(
           onSubmitted: (value) {
-            Get.find<PlanningController>()
-                .setCurrentLine(int.tryParse(value) ?? -1);
+            _planningController.setCurrentLine(int.tryParse(value) ?? -1);
             navigator.pop();
           },
         ),
@@ -61,26 +61,23 @@ class PlanningListView extends StatelessWidget {
 
   changeUserData() {
     Get.defaultDialog(
+      title: 'Change User Data',
       content: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           NamedTextField(
-            name: 'ID: ',
-            onChanged: (value) => _userController.updateId(value),
-          ),
+              name: 'ID: ',
+              onChanged: (value) => _userController.updateId(value)),
           NamedTextField(
-            name: 'Name: ',
-            onChanged: (value) => _userController.updateName(value),
-          ),
+              name: 'Name: ',
+              onChanged: (value) => _userController.updateName(value)),
           NamedTextField(
-            name: 'Email: ',
-            onChanged: (value) => _userController.updateEmail(value),
-          ),
+              name: 'Email: ',
+              onChanged: (value) => _userController.updateEmail(value)),
           NamedTextField(
-            name: 'Favorite Line: ',
-            onChanged: (value) =>
-                _userController.updateFavoriteLine(int.parse(value) ?? -1),
-          ),
+              name: 'Favorite Line: ',
+              onChanged: (value) =>
+                  _userController.updateFavoriteLine(int.parse(value) ?? -1)),
         ],
       ),
     );
@@ -108,12 +105,11 @@ class PlanningListView extends StatelessWidget {
   }
 
   Widget _getCurrentLineCard() {
-    return GetBuilder<PlanningController>(
-      init: PlanningController(),
-      builder: (_) => ListCard(
-        child: Text('Current Line: ${_.currentLine.value}'),
-      ),
-    );
+    return Obx(() {
+      return ListCard(
+        child: Text('Current Line: ${_planningController.currentLine.value}'),
+      );
+    });
   }
 }
 

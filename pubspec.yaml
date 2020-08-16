@@ -24,7 +24,7 @@ dependencies:
   http:
   equatable:
   get:
-  shared_preferences:
+  get_storage:
   google_maps_flutter:
   flutter:
     sdk: flutter

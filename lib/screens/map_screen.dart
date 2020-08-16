@@ -1,4 +1,4 @@
-import '../index.dart';
+import 'package:bus_guide/index.dart';
 
 class MapScreen extends StatefulWidget {
   @override
