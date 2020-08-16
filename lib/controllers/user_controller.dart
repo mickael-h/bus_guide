@@ -11,11 +11,7 @@ class UserController extends GetxController {
     user.update((value) => value.name = name);
   }
 
-  updateEmail(String email) {
-    user.update((value) => value.email = email);
-  }
-
-  updateFavoriteLine(int line) {
-    user.update((value) => value.favoriteLine = line);
+  updatePosition(LatLng pos) {
+    user.update((value) => value.position = pos);
   }
 }

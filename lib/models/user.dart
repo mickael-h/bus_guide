@@ -1,7 +1,8 @@
+import 'package:bus_guide/index.dart';
+
 class User {
-  User({this.id = '', this.name = '', this.email = '', this.favoriteLine = 0});
+  User();
   String id;
   String name;
-  String email;
-  int favoriteLine;
+  LatLng position;
 }

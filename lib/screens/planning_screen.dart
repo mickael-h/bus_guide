@@ -71,13 +71,6 @@ class PlanningListView extends StatelessWidget {
           NamedTextField(
               name: 'Name: ',
               onChanged: (value) => _userController.updateName(value)),
-          NamedTextField(
-              name: 'Email: ',
-              onChanged: (value) => _userController.updateEmail(value)),
-          NamedTextField(
-              name: 'Favorite Line: ',
-              onChanged: (value) =>
-                  _userController.updateFavoriteLine(int.parse(value) ?? -1)),
         ],
       ),
     );
@@ -98,8 +91,7 @@ class PlanningListView extends StatelessWidget {
     return Obx(() {
       User val = _userController.user.value;
       return ListCard(
-        child: Text(
-            'User Data: ${val.id}, ${val.name}, ${val.email}, ${val.favoriteLine}'),
+        child: Text('User Data: ${val.toString()}'),
       );
     });
   }
