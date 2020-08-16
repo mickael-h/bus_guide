@@ -8,3 +8,4 @@ export 'models/user.dart';
 export 'screens/map_screen.dart';
 export 'screens/planning_screen.dart';
 export 'package:bus_guide/controllers/planning_controller.dart';
+export 'package:bus_guide/controllers/user_controller.dart';

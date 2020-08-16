@@ -14,9 +14,7 @@ class PlanningScreen extends StatelessWidget {
 }
 
 class PlanningListView extends StatelessWidget {
-  goToMap() {
-    Get.to(MapScreen());
-  }
+  final UserController _userController = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +26,11 @@ class PlanningListView extends StatelessWidget {
       child: ListView(
         physics: const AlwaysScrollableScrollPhysics(),
         children: <Widget>[
+          _getUserCard(),
           _getCurrentLineCard(),
           _getGoToMapButton(),
           _getSetLineButton(),
+          _getChangeUserDataButton(),
         ],
       ),
     );
@@ -52,6 +52,40 @@ class PlanningListView extends StatelessWidget {
     );
   }
 
+  Widget _getChangeUserDataButton() {
+    return RaisedButton(
+      child: Text('Change User Data'),
+      onPressed: changeUserData,
+    );
+  }
+
+  changeUserData() {
+    Get.defaultDialog(
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          NamedTextField(
+            name: 'ID',
+            onChanged: (value) => _userController.updateId(value),
+          ),
+          NamedTextField(
+            name: 'Name',
+            onChanged: (value) => _userController.updateName(value),
+          ),
+          NamedTextField(
+            name: 'Email',
+            onChanged: (value) => _userController.updateEmail(value),
+          ),
+          NamedTextField(
+            name: 'Favorite Line',
+            onChanged: (value) =>
+                _userController.updateFavoriteLine(int.parse(value) ?? -1),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _getGoToMapButton() {
     return RaisedButton(
       child: Text('Go To Map'),
@@ -59,15 +93,54 @@ class PlanningListView extends StatelessWidget {
     );
   }
 
+  goToMap() {
+    Get.to(MapScreen());
+  }
+
+  Widget _getUserCard() {
+    return Obx(
+      () {
+        User val = _userController.user.value;
+        return ListCard(
+          child: Text(
+              'User Data: ${val.id}, ${val.name}, ${val.email}, ${val.favoriteLine}'),
+        );
+      },
+    );
+  }
+
   Widget _getCurrentLineCard() {
     return GetBuilder<PlanningController>(
       init: PlanningController(),
-      builder: (_) => Card(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Text('Current Line: ${_.currentLine}'),
-          ),
+      builder: (_) => ListCard(
+        child: Text('Current Line: ${_.currentLine}'),
+      ),
+    );
+  }
+}
+
+class NamedTextField extends StatelessWidget {
+  const NamedTextField({Key key, this.onChanged, this.name}) : super(key: key);
+  final Function onChanged;
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return (TextField(onChanged: onChanged));
+  }
+}
+
+class ListCard extends StatelessWidget {
+  const ListCard({Key key, this.child}) : super(key: key);
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: child,
         ),
       ),
     );
