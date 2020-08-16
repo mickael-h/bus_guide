@@ -65,19 +65,19 @@ class PlanningListView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           NamedTextField(
-            name: 'ID',
+            name: 'ID: ',
             onChanged: (value) => _userController.updateId(value),
           ),
           NamedTextField(
-            name: 'Name',
+            name: 'Name: ',
             onChanged: (value) => _userController.updateName(value),
           ),
           NamedTextField(
-            name: 'Email',
+            name: 'Email: ',
             onChanged: (value) => _userController.updateEmail(value),
           ),
           NamedTextField(
-            name: 'Favorite Line',
+            name: 'Favorite Line: ',
             onChanged: (value) =>
                 _userController.updateFavoriteLine(int.parse(value) ?? -1),
           ),
@@ -98,22 +98,20 @@ class PlanningListView extends StatelessWidget {
   }
 
   Widget _getUserCard() {
-    return Obx(
-      () {
-        User val = _userController.user.value;
-        return ListCard(
-          child: Text(
-              'User Data: ${val.id}, ${val.name}, ${val.email}, ${val.favoriteLine}'),
-        );
-      },
-    );
+    return Obx(() {
+      User val = _userController.user.value;
+      return ListCard(
+        child: Text(
+            'User Data: ${val.id}, ${val.name}, ${val.email}, ${val.favoriteLine}'),
+      );
+    });
   }
 
   Widget _getCurrentLineCard() {
     return GetBuilder<PlanningController>(
       init: PlanningController(),
       builder: (_) => ListCard(
-        child: Text('Current Line: ${_.currentLine}'),
+        child: Text('Current Line: ${_.currentLine.value}'),
       ),
     );
   }
@@ -126,7 +124,13 @@ class NamedTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (TextField(onChanged: onChanged));
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: <Widget>[
+        Expanded(flex: 0, child: Text(name)),
+        Expanded(flex: 1, child: TextField(onChanged: onChanged)),
+      ],
+    );
   }
 }
 

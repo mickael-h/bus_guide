@@ -1,10 +1,9 @@
 import '../index.dart';
 
 class PlanningController extends GetxController {
-  int currentLine = 0;
+  final currentLine = 0.obs;
 
-  void setCurrentLine(int line) {
-    currentLine = line;
-    update();
+  setCurrentLine(int line) {
+    currentLine.value = line;
   }
 }
