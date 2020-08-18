@@ -1,12 +1,7 @@
 import 'package:bus_guide/index.dart';
 
-class MapScreen extends StatefulWidget {
-  @override
-  State<MapScreen> createState() => MapScreenState();
-}
-
-class MapScreenState extends State<MapScreen> {
-  Completer<GoogleMapController> _controller = Completer();
+class MapScreen extends StatelessWidget {
+  final Completer<GoogleMapController> _controller = Completer();
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
