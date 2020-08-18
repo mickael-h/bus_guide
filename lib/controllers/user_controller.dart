@@ -2,6 +2,11 @@ import 'package:bus_guide/index.dart';
 
 class UserController extends GetxController {
   final user = User().obs;
+  final Rx<FirebaseUser> fbUser = new Rx<FirebaseUser>();
+
+  setFBUser(FirebaseUser user) {
+    fbUser.value = user;
+  }
 
   updateId(String id) {
     user.update((value) => value.id = id);

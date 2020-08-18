@@ -4,8 +4,6 @@ class LoginController extends GetxController {
   final RxString login = ''.obs;
   final RxString password = ''.obs;
   final RxBool passwordVisible = false.obs;
-  final Rx<FirebaseUser> user = new Rx<FirebaseUser>();
-  final RxString firebaseAuthError = ''.obs;
 
   togglePasswordVisibility() {
     passwordVisible.value = !passwordVisible.value;
@@ -24,15 +22,15 @@ class LoginController extends GetxController {
     try {
       AuthResult res = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: login.value, password: password.value);
-      user.value = res?.user;
+      FirebaseUser user = res?.user;
+      Get.find<UserController>().setFBUser(user);
       Get.defaultDialog(
         title: 'Connection success',
-        middleText: 'User data: ${user.value.email}',
+        middleText: 'User data: ${user?.email}',
         textConfirm: 'OK',
         onConfirm: navigator.pop,
       );
     } catch (e) {
-      firebaseAuthError.value = e?.code;
       Get.defaultDialog(
         title: 'Connection error',
         middleText: 'Error code: ${e?.code}',
