@@ -9,7 +9,7 @@ export 'models/user.dart';
 export 'screens/login_screen.dart';
 export 'screens/map_screen.dart';
 export 'screens/planning_screen.dart';
-export 'controllers/login_bindings.dart';
+export 'controllers/bindings.dart/login_bindings.dart';
 export 'controllers/login_controller.dart';
 export 'controllers/planning_controller.dart';
 export 'controllers/user_controller.dart';
