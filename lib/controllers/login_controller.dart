@@ -19,6 +19,7 @@ class LoginController extends GetxController {
     password.value = newPassword;
   }
 
+  //TODO: save token
   connect() async {
     try {
       AuthResult res = await FirebaseAuth.instance.signInWithEmailAndPassword(

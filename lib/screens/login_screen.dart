@@ -20,20 +20,21 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Login:'),
-            TextField(
-              onChanged: (txt) => Get.find<LoginController>().setLogin(txt),
-            ),
+            _getLoginInput(),
             SizedBox(height: 20),
             Text('Password:'),
             _getPasswordInput(),
             SizedBox(height: 20),
-            RaisedButton(
-              child: Text('Login'),
-              onPressed: Get.find<LoginController>().connect,
-            )
+            _getConnectButton(),
           ],
         ),
       ),
+    );
+  }
+
+  _getLoginInput() {
+    return TextField(
+      onChanged: (txt) => Get.find<LoginController>().setLogin(txt),
     );
   }
 
@@ -58,5 +59,12 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     ]);
+  }
+
+  _getConnectButton() {
+    return RaisedButton(
+      child: Text('Login'),
+      onPressed: Get.find<LoginController>().connect,
+    );
   }
 }
