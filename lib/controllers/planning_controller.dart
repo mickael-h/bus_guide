@@ -10,8 +10,9 @@ class PlanningController extends GetxController {
     CollectionReference planning =
         firestore.collection('plannings/${user.uid}/2020-08-19');
     QuerySnapshot querySnap = await planning.get();
-    List<DocumentSnapshot> docSnaps = querySnap?.docs;
-    planningList.value =
-        docSnaps?.map((DocumentSnapshot docSnap) => docSnap.data());
+    List<QueryDocumentSnapshot> docSnaps = querySnap.docs;
+    planningList.value = docSnaps
+        .map((QueryDocumentSnapshot docSnap) => docSnap.data())
+        .toList();
   }
 }

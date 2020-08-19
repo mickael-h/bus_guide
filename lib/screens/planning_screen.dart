@@ -29,7 +29,8 @@ class PlanningListView extends StatelessWidget {
     );
   }
 
-  Widget getPlanningViewFromData(data) {
+  Widget getPlanningViewFromData(Map<String, dynamic> data) {
+    print(jsonEncode(data));
     return Text(data.toString());
   }
 }

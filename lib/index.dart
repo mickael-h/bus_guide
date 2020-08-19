@@ -5,6 +5,7 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'dart:async';
+export 'dart:convert';
 export 'main.dart';
 export 'screens/login_screen.dart';
 export 'package:firebase_core/firebase_core.dart';
