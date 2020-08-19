@@ -5,13 +5,13 @@ class PlanningController extends GetxController {
       <Map<String, dynamic>>[].obs;
 
   fetchPlanning() async {
-    Firestore firestore = Firestore.instance;
-    FirebaseUser user = Get.find<UserController>().fbUser.value;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    User user = Get.find<UserController>().fbUser.value;
     CollectionReference planning =
         firestore.collection('plannings/${user.uid}/2020-08-19');
-    QuerySnapshot querySnap = await planning.getDocuments();
-    List<DocumentSnapshot> docSnaps = querySnap?.documents;
+    QuerySnapshot querySnap = await planning.get();
+    List<DocumentSnapshot> docSnaps = querySnap?.docs;
     planningList.value =
-        docSnaps?.map((DocumentSnapshot docSnap) => docSnap.data);
+        docSnaps?.map((DocumentSnapshot docSnap) => docSnap.data());
   }
 }

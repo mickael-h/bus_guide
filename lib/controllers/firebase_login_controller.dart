@@ -4,8 +4,10 @@ class FirebaseLoginController extends GetxController {
   Future<bool> connect() async {
     LoginInputController inputCtrlr = Get.find<LoginInputController>();
     try {
-      AuthResult res = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: inputCtrlr.login.value, password: inputCtrlr.password.value);
+      UserCredential res = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: inputCtrlr.login.value,
+              password: inputCtrlr.password.value);
       Get.find<UserController>().setFBUser(res?.user);
       return true;
     } catch (e) {
