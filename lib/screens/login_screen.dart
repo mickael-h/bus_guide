@@ -15,14 +15,12 @@ class LoginScreen extends StatelessWidget {
   _getLoginLayout() {
     return Center(
       child: FractionallySizedBox(
-        widthFactor: 0.5,
+        widthFactor: 0.75,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Login:'),
             _getLoginInput(),
             SizedBox(height: 20),
-            Text('Password:'),
             _getPasswordInput(),
             SizedBox(height: 20),
             _getConnectButton(),
@@ -34,37 +32,46 @@ class LoginScreen extends StatelessWidget {
 
   _getLoginInput() {
     return TextField(
-      onChanged: (txt) => Get.find<LoginController>().setLogin(txt),
+      decoration: InputDecoration(
+        hintText: 'Login',
+        border: const OutlineInputBorder(),
+      ),
+      onChanged: (txt) => Get.find<LoginInputController>().setLogin(txt),
     );
   }
 
   _getPasswordInput() {
-    return Row(children: [
-      Expanded(
-        flex: 1,
-        child: Obx(
+    return Stack(
+      alignment: Alignment.centerRight,
+      children: [
+        Obx(
           () => TextField(
-            obscureText: Get.find<LoginController>().passwordVisible.value,
-            onChanged: (txt) => Get.find<LoginController>().setPassword(txt),
+            decoration: InputDecoration(
+              hintText: 'Password',
+              border: const OutlineInputBorder(),
+            ),
+            obscureText: Get.find<LoginInputController>().hidePassword.value,
+            onChanged: (txt) =>
+                Get.find<LoginInputController>().setPassword(txt),
           ),
         ),
-      ),
-      Obx(
-        () => FlatButton(
-          onPressed: () =>
-              Get.find<LoginController>().togglePasswordVisibility(),
-          child: Icon(Get.find<LoginController>().passwordVisible.value
-              ? Icons.visibility
-              : Icons.visibility_off),
+        Obx(
+          () => FlatButton(
+            onPressed: () =>
+                Get.find<LoginInputController>().togglePasswordVisibility(),
+            child: Icon(Get.find<LoginInputController>().hidePassword.value
+                ? Icons.visibility
+                : Icons.visibility_off),
+          ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 
   _getConnectButton() {
     return RaisedButton(
-      child: Text('Login'),
-      onPressed: Get.find<LoginController>().connect,
+      child: Text('Connect'),
+      onPressed: Get.find<LoginScreenController>().onConnectButtonPressed,
     );
   }
 }

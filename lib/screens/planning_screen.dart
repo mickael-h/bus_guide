@@ -16,28 +16,20 @@ class PlanningScreen extends StatelessWidget {
 class PlanningListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        await Future.delayed(
-            const Duration(seconds: 1)); // TODO: actually refresh list
-      },
-      child: ListView(
+    Get.find<PlanningController>().fetchPlanning();
+    return Obx(
+      () => ListView(
         physics: const AlwaysScrollableScrollPhysics(),
-        children: <Widget>[
-          _getGoToMapButton(),
-        ],
+        children: Get.find<PlanningController>()
+            .planningList
+            .value
+            .map(getPlanningViewFromData)
+            .toList(growable: false),
       ),
     );
   }
 
-  Widget _getGoToMapButton() {
-    return RaisedButton(
-      child: Text('Go To Map'),
-      onPressed: goToMap,
-    );
-  }
-
-  goToMap() {
-    Get.to(MapScreen());
+  Widget getPlanningViewFromData(data) {
+    return Text(data.toString());
   }
 }
