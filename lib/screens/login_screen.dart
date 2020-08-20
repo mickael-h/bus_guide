@@ -3,6 +3,21 @@ import 'package:bus_guide/index.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Firebase.initializeApp(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error');
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return _getScreen(context);
+        }
+        return Text('Loading');
+      },
+    );
+  }
+
+  Scaffold _getScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -71,7 +86,9 @@ class LoginScreen extends StatelessWidget {
   _getConnectButton() {
     return RaisedButton(
       child: Text('Connect'),
-      onPressed: Get.find<LoginScreenController>().onConnectButtonPressed,
+      onPressed: () {
+        Get.find<LoginScreenController>().onConnectButtonPressed();
+      },
     );
   }
 }

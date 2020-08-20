@@ -6,8 +6,7 @@ class FirebaseLoginController extends GetxController {
     try {
       UserCredential res = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-              email: inputCtrlr.login.value,
-              password: inputCtrlr.password.value);
+              email: 'mickael.hassine@gmail.com', password: '123456');
       Get.find<UserController>().setFBUser(res?.user);
       return true;
     } catch (e) {

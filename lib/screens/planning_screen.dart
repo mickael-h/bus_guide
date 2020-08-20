@@ -8,7 +8,9 @@ class PlanningScreen extends StatelessWidget {
         centerTitle: true,
         title: Text('Planning'),
       ),
-      body: PlanningListView(),
+      body: Calendar(
+        title: 'calendrier',
+      ),
     );
   }
 }
@@ -16,7 +18,7 @@ class PlanningScreen extends StatelessWidget {
 class PlanningListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Get.find<PlanningController>().fetchPlanning();
+    Get.find<PlanningController>().fetchPlanningfor(DateTime.now());
     return Obx(
       () => ListView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -30,7 +32,7 @@ class PlanningListView extends StatelessWidget {
   }
 
   Widget getPlanningViewFromData(Map<String, dynamic> data) {
-    print(jsonEncode(data));
+    print('data received $data');
     return Text(data.toString());
   }
 }
