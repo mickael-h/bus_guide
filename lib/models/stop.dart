@@ -1,11 +1,12 @@
 import 'package:bus_guide/index.dart';
 
-class Trip extends FetchedFBModel {
+class Stop extends FetchedFBModel {
   String name;
-  List<Stop> stops;
-  Trip(Map<String, dynamic> data) {
-    print('new trip $data');
+  GeoPoint position;
+  Stop(Map<String, dynamic> data) {
+    print('new stop $data');
     try {
+      position = data['position'];
       name = data['name'];
       hasError = false;
     } catch (e) {

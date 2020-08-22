@@ -8,8 +8,11 @@ class PlanningScreen extends StatelessWidget {
         centerTitle: true,
         title: Text('Planning'),
       ),
-      body: Calendar(
-        title: 'calendrier',
+      body: Column(
+        children: <Widget>[
+          Expanded(child: Calendar()),
+          Expanded(child: PlanningListView()),
+        ],
       ),
     );
   }
@@ -31,8 +34,8 @@ class PlanningListView extends StatelessWidget {
     );
   }
 
-  Widget getPlanningViewFromData(Map<String, dynamic> data) {
-    print('data received $data');
+  Widget getPlanningViewFromData(Planning data) {
+    print('data received: $data');
     return Text(data.toString());
   }
 }
