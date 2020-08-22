@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents/lines/{line}/{type} {
+    match /{document=**} {
+      allow read, write: if request.auth != null && 
+      	(type == "schedules" || type == "stops" || type == "trips");
+    }
+  }
+  match /databases/{database}/documents/plannings/{uid} {
+    match /{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}
