@@ -99,63 +99,22 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        // Switch out 2 lines below to play with TableCalendar's settings
-        //-----------------------
-        _buildTableCalendar(),
-        // _buildTableCalendarWithBuilders(),
-        Expanded(child: _buildEventList()),
-      ],
-    );
-  }
-
-  // Simple TableCalendar configuration (using Styles)
-  Widget _buildTableCalendar() {
     return TableCalendar(
       locale: 'fr_FR',
       calendarController: _calendarController,
       events: _events,
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
-        selectedColor: Colors.blue[400],
-        todayColor: Colors.blue[200],
+        selectedColor: context.theme.primaryColor,
+        todayColor: context.theme.cardColor,
         markersColor: Colors.black,
         outsideDaysVisible: false,
-      ),
-      headerStyle: HeaderStyle(
-        formatButtonTextStyle:
-            TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
-        formatButtonDecoration: BoxDecoration(
-          color: Colors.blue[400],
-          borderRadius: BorderRadius.circular(16.0),
-        ),
       ),
       onDaySelected: _onDaySelected,
       initialCalendarFormat: CalendarFormat.week,
       availableCalendarFormats: const {
         CalendarFormat.week: '',
       },
-    );
-  }
-
-  Widget _buildEventList() {
-    return ListView(
-      children: _selectedEvents
-          .map((event) => Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.8),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: ListTile(
-                  title: Text('evt: $event'),
-                  onTap: () => print('$event tapped!'),
-                ),
-              ))
-          .toList(),
     );
   }
 }

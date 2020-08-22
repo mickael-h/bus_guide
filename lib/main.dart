@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
       home: LoginScreen(),
       initialBinding: LoginBinding(),
       theme: ThemeData(
-        primaryColor: Colors.lightBlue,
-        cardColor: Color.fromRGBO(200, 200, 255, 1.0),
+        primaryColor: Colors.blue,
+        cardColor: Colors.blue[200],
         brightness: Brightness.light,
       ),
     );

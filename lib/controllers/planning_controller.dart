@@ -14,33 +14,39 @@ class PlanningController extends GetxController {
         .snapshots()
         .map((QuerySnapshot query) {
       List<Planning> dataList = List();
-      query.docs.forEach((element) async {
-        dataList.add(await _createPlanning(element.data()));
+      query.docs.forEach((element) {
+        dataList.add(_createPlanning(element.data()));
       });
       return dataList;
     });
     planningList.bindStream(planning);
   }
 
-  Future<Planning> _createPlanning(Map<String, dynamic> data) async {
+  Planning _createPlanning(Map<String, dynamic> data) {
     Planning planning = Planning(data);
     if (_checkIntegrity(planning)) {
       try {
         DocumentReference scheduleRef = data['schedule_ref'];
-        Map<String, dynamic> scheduleData = (await scheduleRef.get()).data();
-        planning.schedule = Schedule(scheduleData);
+        scheduleRef.get().then((snap) {
+          Map<String, dynamic> scheduleData = snap.data();
+          planning.schedule = Schedule(scheduleData);
 
-        DocumentReference tripRef = scheduleData['trip_ref'];
-        Map<String, dynamic> tripData = (await tripRef.get()).data();
-        planning.schedule.trip = Trip(tripData);
+          DocumentReference tripRef = scheduleData['trip_ref'];
+          tripRef.get().then((snap) {
+            Map<String, dynamic> tripData = snap.data();
+            planning.schedule.trip = Trip(tripData);
 
-        List<dynamic> stopRefs = tripData['stops'];
-        List<Stop> stops = List();
-        for (DocumentReference stopRef in stopRefs) {
-          Map<String, dynamic> stopData = (await stopRef.get()).data();
-          stops.add(Stop(stopData));
-        }
-        planning.schedule.trip.stops = stops;
+            List<dynamic> stopRefs = tripData['stops'];
+            List<Stop> stops = List();
+            for (DocumentReference stopRef in stopRefs) {
+              stopRef.get().then((snap) {
+                Map<String, dynamic> stopData = snap.data();
+                stops.add(Stop(stopData));
+              });
+            }
+            planning.schedule.trip.stops = stops;
+          });
+        });
       } catch (e) {
         planning.errorMessage = e.toString();
         planning.hasError = true;

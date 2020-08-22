@@ -10,8 +10,8 @@ class PlanningScreen extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(child: Calendar()),
-          Expanded(child: PlanningListView()),
+          Expanded(flex: 0, child: Calendar()),
+          Expanded(flex: 1, child: PlanningListView()),
         ],
       ),
     );
@@ -36,6 +36,16 @@ class PlanningListView extends StatelessWidget {
 
   Widget getPlanningViewFromData(Planning data) {
     print('data received: $data');
-    return Text(data.toString());
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(width: 0.8),
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      child: ListTile(
+        title: Text('Ligne ${data.lineName} à ${data.schedule.times[0]}'),
+        onTap: () => print('$data tapped!'),
+      ),
+    );
   }
 }
