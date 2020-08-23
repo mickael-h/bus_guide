@@ -2,7 +2,7 @@ import 'package:bus_guide/index.dart';
 
 class Schedule extends FetchedFBModel {
   bool isReversed;
-  List<dynamic> times;
+  List<Timestamp> times;
   Trip trip;
   String name;
   Schedule(Map<String, dynamic> data) {
@@ -10,7 +10,10 @@ class Schedule extends FetchedFBModel {
     try {
       isReversed = data['is_reversed'];
       name = data['name'];
-      times = data['times'];
+      times = (data['times'] as List)
+          .map((e) => Timestamp(e['_seconds'], e['_nanoseconds']))
+          .toList(growable: false);
+      trip = Trip(data['trip']);
       hasError = false;
     } catch (e) {
       errorMessage = e.toString();

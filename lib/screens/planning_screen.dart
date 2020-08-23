@@ -21,7 +21,6 @@ class PlanningScreen extends StatelessWidget {
 class PlanningListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Get.find<PlanningController>().fetchPlanningfor(DateTime.now());
     return Obx(
       () => ListView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -35,7 +34,6 @@ class PlanningListView extends StatelessWidget {
   }
 
   Widget getPlanningViewFromData(Planning data) {
-    print('data received: $data');
     return Container(
       decoration: BoxDecoration(
         border: Border.all(width: 0.8),
@@ -43,7 +41,7 @@ class PlanningListView extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: ListTile(
-        title: Text('Ligne ${data.lineName} à ${data.schedule.times[0]}'),
+        title: Text('${data.lineName}, ${data.schedule.name}'),
         onTap: () => print('$data tapped!'),
       ),
     );

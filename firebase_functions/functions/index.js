@@ -7,21 +7,30 @@ const db = admin.firestore();
 //
 exports.getPlanning = functions.region('europe-west1')
 .https.onRequest((request, response) => {
-    // functions.logger.info("Hello logs!", { structuredData: true });
     getPlanningData(request.query)
-        .then(data => response.send(data))
-        .catch((err) => {
-            console.log('Error getting documents', err);
-            return response.status(500).json({ message: "Error getting the planning" + err });
-        });
+        .then(data => response.json(data))
+        .catch((err) => returnError(err));
 });
+
+exports.callableTest = functions.region('europe-west1')
+.https.onCall((data, context) => {
+    const resp = {
+        data,
+        context,
+    };
+    return resp;
+});
+
+function returnError(err) {
+    functions.logger.error('Error getting documents', err, { structuredData: true });
+    return response.status(500).json({ message: "Error getting the planning" + err });
+}
 
 async function getPlanningData(query) {
     const planRef = db.collection('plannings').doc(query.uid).collection(query.date);
     const snapshot = await planRef.get();
-    const plannings = await fetchScheduleRefs(snapshot);
-    console.log('plannings results: ', plannings);
-    return plannings;
+    const planning = await fetchScheduleRefs(snapshot);
+    return { planning };
 }
 
 async function fetchScheduleRefs(planningSnapshot) {

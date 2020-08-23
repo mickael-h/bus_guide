@@ -7,6 +7,8 @@ class Trip extends FetchedFBModel {
     print('new trip $data');
     try {
       name = data['name'];
+      stops =
+          (data['stops'] as List).map((e) => Stop(e)).toList(growable: false);
       hasError = false;
     } catch (e) {
       errorMessage = e.toString();

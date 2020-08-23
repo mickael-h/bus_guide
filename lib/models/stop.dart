@@ -2,11 +2,12 @@ import 'package:bus_guide/index.dart';
 
 class Stop extends FetchedFBModel {
   String name;
-  GeoPoint position;
+  LatLng position;
   Stop(Map<String, dynamic> data) {
     print('new stop $data');
     try {
-      position = data['position'];
+      position =
+          LatLng(data['position']['_latitude'], data['position']['_longitude']);
       name = data['name'];
       hasError = false;
     } catch (e) {

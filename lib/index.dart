@@ -2,6 +2,7 @@ export 'package:flutter/foundation.dart';
 export 'package:flutter/material.dart';
 export 'package:get/get.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
+export 'package:cloud_functions/cloud_functions.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'dart:async';
