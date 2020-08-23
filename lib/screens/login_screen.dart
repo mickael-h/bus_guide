@@ -10,6 +10,7 @@ class LoginScreen extends StatelessWidget {
           return Text('Error');
         }
         if (snapshot.connectionState == ConnectionState.done) {
+          CloudFunctions(app: Firebase.app(), region: 'europe-west1');
           return _getScreen(context);
         }
         return Text('Loading');

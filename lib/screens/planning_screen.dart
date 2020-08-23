@@ -25,10 +25,11 @@ class PlanningListView extends StatelessWidget {
       () => ListView(
         physics: const AlwaysScrollableScrollPhysics(),
         children: Get.find<PlanningController>()
-            .planningList
-            .value
-            .map(getPlanningViewFromData)
-            .toList(growable: false),
+                .planningList
+                .value
+                ?.map(getPlanningViewFromData)
+                ?.toList(growable: false) ??
+            [],
       ),
     );
   }
@@ -42,7 +43,10 @@ class PlanningListView extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: ListTile(
         title: Text('${data.lineName}, ${data.schedule.name}'),
-        onTap: () => print('$data tapped!'),
+        onTap: () {
+          Get.find<PlanningController>().currentTask.value = data;
+          Get.to(MapScreen(), binding: MapScreenBindings());
+        },
       ),
     );
   }

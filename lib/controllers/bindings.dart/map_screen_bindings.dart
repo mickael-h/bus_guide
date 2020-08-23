@@ -1,9 +1,9 @@
 import 'package:bus_guide/index.dart';
 
-class PlanningBindings extends Bindings {
+class MapScreenBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<UserController>(() => UserController());
+    Get.lazyPut<MapScreenController>(() => MapScreenController());
     Get.lazyPut<PlanningController>(() => PlanningController());
   }
 }

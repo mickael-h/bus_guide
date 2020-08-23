@@ -4,7 +4,7 @@ class LoginScreenController extends GetxController {
   onConnectButtonPressed() async {
     bool isConnected = await Get.find<FirebaseLoginController>().connect();
     if (isConnected) {
-      Get.to(PlanningScreen(), binding: PlanningBinding());
+      Get.to(PlanningScreen(), binding: PlanningBindings());
     }
   }
 }

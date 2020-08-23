@@ -5,29 +5,19 @@ const db = admin.firestore();
 
 // https://firebase.google.com/docs/functions/write-firebase-functions
 //
+
 exports.getPlanning = functions.region('europe-west1')
-.https.onRequest((request, response) => {
-    getPlanningData(request.query)
-        .then(data => response.json(data))
-        .catch((err) => returnError(err));
+.https.onCall(async (data, context) => {
+    try {
+        return await getPlanningData(context.auth.uid, data.date);
+    } catch (error) {
+        functions.logger.error('Error getting documents', error, { structuredData: true });
+        return {"error": error};
+    }
 });
 
-exports.callableTest = functions.region('europe-west1')
-.https.onCall((data, context) => {
-    const resp = {
-        data,
-        context,
-    };
-    return resp;
-});
-
-function returnError(err) {
-    functions.logger.error('Error getting documents', err, { structuredData: true });
-    return response.status(500).json({ message: "Error getting the planning" + err });
-}
-
-async function getPlanningData(query) {
-    const planRef = db.collection('plannings').doc(query.uid).collection(query.date);
+async function getPlanningData(uid, date) {
+    const planRef = db.collection('plannings').doc(uid).collection(date);
     const snapshot = await planRef.get();
     const planning = await fetchScheduleRefs(snapshot);
     return { planning };
