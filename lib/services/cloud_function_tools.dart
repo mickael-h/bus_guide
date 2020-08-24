@@ -25,7 +25,7 @@ class CloudFunctionTools {
       );
       return jsonDecode(response?.body)['result'];
     } catch (e) {
-      print('error receving data: $e');
+      print('error retrieving data: $e');
       return <String, dynamic>{};
     }
   }

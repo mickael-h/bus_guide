@@ -5,6 +5,16 @@ class PlanningController extends GetxController {
   final Rx<Planning> currentTask = Rx<Planning>();
 
   fetchPlanningfor(DateTime date) async {
+    // Should work, but doesn't.
+    // See: https://github.com/FirebaseExtended/flutterfire/issues/3290
+    // final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+    //   functionName: 'getPlanning',
+    // );
+    // final HttpsCallableResult result = await callable.call(<String, dynamic>{
+    //   'date': '2020-08-20',
+    // });
+    // print('received value: ${result.data}');
+
     Map<String, dynamic> data = await CloudFunctionTools.callFunction(
         'getPlanning',
         data: {'date': '2020-08-20'});
@@ -14,7 +24,7 @@ class PlanningController extends GetxController {
 
   List<Planning> _getPlanningsFromJSON(Map<String, dynamic> data) {
     List<Planning> plannings = <Planning>[];
-    List<dynamic> planningObjs = data['planning'];
+    List<dynamic> planningObjs = data['plannings'];
     for (Map<String, dynamic> planObj in planningObjs) {
       Planning planning = Planning(planObj);
       plannings.add(planning);

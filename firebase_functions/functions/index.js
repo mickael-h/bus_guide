@@ -19,8 +19,8 @@ exports.getPlanning = functions.region('europe-west1')
 async function getPlanningData(uid, date) {
     const planRef = db.collection('plannings').doc(uid).collection(date);
     const snapshot = await planRef.get();
-    const planning = await fetchScheduleRefs(snapshot);
-    return { planning };
+    const plannings = await fetchScheduleRefs(snapshot);
+    return { plannings };
 }
 
 async function fetchScheduleRefs(planningSnapshot) {
