@@ -13,10 +13,12 @@ class MapScreen extends StatelessWidget {
         () => GoogleMap(
           mapType: MapType.normal,
           initialCameraPosition: mapController.cameraPosition.value,
+          myLocationButtonEnabled: true,
+          myLocationEnabled: true,
           onMapCreated: (GoogleMapController controller) {
             Completer<GoogleMapController> completer = mapController.completer;
             completer.complete(controller);
-            mapController.displayCurrentPlanning();
+            mapController.onMapCreated();
           },
           markers: mapController.markers.value,
         ),

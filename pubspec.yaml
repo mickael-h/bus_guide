@@ -32,6 +32,8 @@ dependencies:
   cloud_firestore: ^0.14.0
   cloud_functions: ^0.6.0
   table_calendar: ^2.2.3
+  location: ^3.0.2
+  app_settings: ^4.0.3
   flutter:
     sdk: flutter
 

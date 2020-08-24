@@ -8,6 +8,8 @@ class MapScreenController extends GetxController {
     zoom: 14.8373, // Whole country: 6.3343,
   ).obs;
   final Rx<Set<Marker>> markers = Set<Marker>().obs;
+  final Location location = new Location();
+  StreamSubscription _locationStreamSub;
 
   setMapCenter(double latitude, double longitude,
       {double zoom, double tilt, double bearing}) async {
@@ -38,7 +40,46 @@ class MapScreenController extends GetxController {
     print('zoom is ${await controller.getZoomLevel()}');
   }
 
-  displayCurrentPlanning() {
+  onMapCreated() async {
+    bool hasPerm = await _checkPermissions();
+    _displayCurrentPlanning();
+    if (hasPerm) {
+      _startLocationService();
+    }
+  }
+
+  _checkPermissions() async {
+    PermissionStatus permission;
+    permission = await location.hasPermission();
+    if (permission == PermissionStatus.denied) {
+      permission = await location.requestPermission();
+      if (permission == PermissionStatus.deniedForever) {
+        await _showRationalePopup();
+        permission = await location.requestPermission();
+      }
+    }
+    return permission == PermissionStatus.granted;
+  }
+
+  _showRationalePopup() async {
+    await Get.defaultDialog(
+      content: Text(
+        'La localisation GPS est désactivée pour cette application. Le guidage ne peut pas fonctionner sans cette permission. Souhaitez-vous l\'activer ?',
+        textAlign: TextAlign.center,
+      ),
+      title: 'Autorisation Nécessaire',
+      textCancel: 'Non merci',
+      onCancel: navigator.pop,
+      textConfirm: 'D\'accord',
+      confirmTextColor: Colors.white,
+      onConfirm: () async {
+        await AppSettings.openAppSettings();
+        navigator.pop();
+      },
+    );
+  }
+
+  _displayCurrentPlanning() {
     final Planning currentPlanning =
         Get.find<PlanningController>().currentPlanning.value;
     final Trip currentTrip = currentPlanning?.schedule?.trip;
@@ -50,5 +91,21 @@ class MapScreenController extends GetxController {
       ));
     }
     markers.value = newMarkers;
+  }
+
+  _startLocationService() {
+    _locationStreamSub =
+        location.onLocationChanged.listen((LocationData currentLocation) {
+      print('$currentLocation à ${currentLocation.time}');
+    });
+  }
+
+  @override
+  void onClose() {
+    _locationStreamSub.cancel();
+    completer.future.then(
+      (GoogleMapController controller) => controller.dispose(),
+    );
+    super.onClose();
   }
 }
