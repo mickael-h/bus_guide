@@ -43,10 +43,7 @@ class PlanningListView extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: ListTile(
         title: Text('${data.lineName}, ${data.schedule.name}'),
-        onTap: () {
-          Get.find<PlanningController>().currentTask.value = data;
-          Get.to(MapScreen(), binding: MapScreenBindings());
-        },
+        onTap: () => Get.find<PlanningController>().pickPlanning(data),
       ),
     );
   }

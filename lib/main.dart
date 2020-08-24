@@ -1,6 +1,8 @@
 import 'index.dart';
 
-void main() {
+void main() async {
+  await DotEnv().load('.env');
+  await AppConfig.init(DotEnv().env['CONFIG']);
   initializeDateFormatting().then((_) => runApp(MyApp()));
 }
 

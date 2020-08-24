@@ -2,7 +2,7 @@ import 'package:bus_guide/index.dart';
 
 class PlanningController extends GetxController {
   final RxList<Planning> planningList = RxList<Planning>();
-  final Rx<Planning> currentTask = Rx<Planning>();
+  final Rx<Planning> currentPlanning = Rx<Planning>();
 
   fetchPlanningfor(DateTime date) async {
     // Should work, but doesn't.
@@ -30,5 +30,13 @@ class PlanningController extends GetxController {
       plannings.add(planning);
     }
     return plannings;
+  }
+
+  pickPlanning(Planning data) async {
+    currentPlanning.value = data;
+    Get.to(
+      MapScreen(),
+      binding: MapScreenBindings(),
+    );
   }
 }
