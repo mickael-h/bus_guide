@@ -3,28 +3,29 @@ import 'package:bus_guide/index.dart';
 class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    MapScreenController mapController = Get.find<MapScreenController>();
     return new Scaffold(
       appBar: AppBar(
         title: Text('Guidage'),
         centerTitle: true,
       ),
-      body: Obx(
-        () => GoogleMap(
+      body: Obx(() {
+        MapMainController mapController = Get.find<MapMainController>();
+        return GoogleMap(
           mapType: MapType.normal,
-          initialCameraPosition: mapController.cameraPosition.value,
+          initialCameraPosition: mapController.getCameraPosition(),
           myLocationButtonEnabled: true,
           myLocationEnabled: true,
           onMapCreated: (GoogleMapController controller) {
-            Completer<GoogleMapController> completer = mapController.completer;
-            completer.complete(controller);
-            mapController.onMapCreated();
+            mapController.initController(controller);
+            mapController.startPlanning(
+                Get.find<PlanningController>().currentPlanning.value);
           },
-          markers: mapController.markers.value,
-        ),
-      ),
+          markers: mapController.getMarkers(),
+        );
+      }),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => mapController.showLinePanel(),
+        onPressed: () => Get.bottomSheet(PlanningPanel(
+            Get.find<PlanningController>().currentPlanning.value)),
         label: Text('Voir la ligne'),
         icon: Icon(Icons.location_on),
       ),

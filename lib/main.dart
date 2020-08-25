@@ -2,7 +2,8 @@ import 'index.dart';
 
 void main() async {
   await DotEnv().load('.env');
-  await AppConfig.init(DotEnv().env['CONFIG']);
+  Map<String, String> env = DotEnv().env;
+  await AppConfig.init(env['CONFIG'], env['GOOGLE_API_KEY']);
   initializeDateFormatting().then((_) => runApp(MyApp()));
 }
 
