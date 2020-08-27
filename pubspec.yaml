@@ -35,9 +35,9 @@ dependencies:
   location: ^3.0.2
   app_settings: ^4.0.3
   flutter_polyline_points: ^0.2.3
+  intl: ^0.16.1
+  date_format: ^1.0.8
   flutter:
-    sdk: flutter
-  flutter_localizations:
     sdk: flutter
 
 

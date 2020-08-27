@@ -23,14 +23,15 @@ class PlanningPanel extends StatelessWidget {
     }
     List<Map<String, dynamic>> timedStops = [];
     for (var i = 0; i < schedule?.times?.length; i++) {
-      Timestamp ts = schedule?.times[i];
+      DateTime date = schedule?.times[i].toDate();
       Stop stop = schedule?.trip?.stops[i];
-      timedStops.add({"time": ts, "stop": stop});
+      timedStops.add({"time": date, "stop": stop});
     }
     return timedStops;
   }
 
   Widget _getStopViewFromData(Map<String, dynamic> timedStop) {
+    String formattedDate = formatDate(timedStop["time"], ['HH', ':', 'nn']);
     return Container(
       decoration: BoxDecoration(
         border: Border.all(width: 0.8),
@@ -38,8 +39,7 @@ class PlanningPanel extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: ListTile(
-        title:
-            Text('${timedStop["time"]}: ${(timedStop["stop"] as Stop).name}'),
+        title: Text('$formattedDate: ${(timedStop["stop"] as Stop).name}'),
         onTap: () => {/*TODO: GPS guidance*/},
       ),
     );

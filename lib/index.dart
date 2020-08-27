@@ -29,6 +29,7 @@ export 'controllers/login_controllers/firebase_login_controller.dart';
 export 'controllers/planning_controller.dart';
 export 'controllers/user_controller.dart';
 export 'services/cloud_function_tools.dart';
+export 'package:date_format/date_format.dart' show formatDate;
 export 'services/app_config.dart';
 export 'models/trip.dart';
 export 'models/stop.dart';

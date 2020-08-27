@@ -14,10 +14,10 @@ class PlanningController extends GetxController {
     //   'date': '2020-08-20',
     // });
     // print('received value: ${result.data}');
-
+    String formattedDate = formatDate(date, ['yyyy', '-', 'mm', '-', 'dd']);
     Map<String, dynamic> data = await CloudFunctionTools.callFunction(
         'getPlanning',
-        data: {'date': '2020-08-20'});
+        data: {'date': formattedDate});
     List<Planning> plannings = _getPlanningsFromJSON(data);
     planningList.value = plannings;
   }
@@ -27,7 +27,9 @@ class PlanningController extends GetxController {
     List<dynamic> planningObjs = data['plannings'];
     for (Map<String, dynamic> planObj in planningObjs) {
       Planning planning = Planning(planObj);
-      plannings.add(planning);
+      if (!planning.hasError) {
+        plannings.add(planning);
+      }
     }
     return plannings;
   }
