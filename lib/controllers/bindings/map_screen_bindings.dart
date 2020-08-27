@@ -7,6 +7,5 @@ class MapScreenBindings extends Bindings {
     Get.lazyPut<PlanningController>(() => PlanningController());
     Get.lazyPut<MapMainController>(() => MapMainController());
     Get.lazyPut<MarkersController>(() => MarkersController());
-    Get.lazyPut<PlanningOverlayController>(() => PlanningOverlayController());
   }
 }

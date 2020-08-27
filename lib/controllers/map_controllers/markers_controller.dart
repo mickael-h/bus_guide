@@ -3,14 +3,14 @@ import 'package:bus_guide/index.dart';
 class MarkersController extends GetxController {
   final Rx<Set<Marker>> markers = Set<Marker>().obs;
 
-  setMarkers(Map<String, LatLng> markerPositions) {
+  setMarkersForTrip(Trip trip) {
     Set<Marker> newMarkers = Set<Marker>();
-    markerPositions?.forEach((id, pos) {
+    for (Stop stop in (trip?.stops ?? [])) {
       newMarkers.add(new Marker(
-        markerId: MarkerId(id),
-        position: pos,
+        markerId: MarkerId(stop.name),
+        position: stop.position,
       ));
-    });
+    }
     markers.value = newMarkers;
   }
 }

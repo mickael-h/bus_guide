@@ -5,8 +5,6 @@ class MapMainController extends GetxController {
   final PositioningController _posController =
       Get.find<PositioningController>();
   final MarkersController _markersController = Get.find<MarkersController>();
-  final PlanningOverlayController _planOverController =
-      Get.find<PlanningOverlayController>();
 
   initController(GoogleMapController controller) async {
     _completer.complete(controller);
@@ -15,7 +13,7 @@ class MapMainController extends GetxController {
   }
 
   startPlanning(Planning planning) {
-    _planOverController.setPlanning(planning);
+    _markersController.setMarkersForTrip(planning?.schedule?.trip);
   }
 
   CameraPosition getCameraPosition() {
