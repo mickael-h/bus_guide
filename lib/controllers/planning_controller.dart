@@ -22,6 +22,22 @@ class PlanningController extends GetxController {
     planningList.value = plannings;
   }
 
+  List<Map<String, dynamic>> getTimedStops() {
+    Planning planning = currentPlanning.value;
+    Schedule schedule = planning?.schedule;
+    List<Stop> stops = schedule?.trip?.stops;
+    if (schedule?.isReversed ?? false) {
+      stops = stops?.reversed;
+    }
+    List<Map<String, dynamic>> timedStops = [];
+    for (var i = 0; i < schedule?.times?.length; i++) {
+      DateTime date = schedule?.times[i].toDate();
+      Stop stop = schedule?.trip?.stops[i];
+      timedStops.add({"time": date, "stop": stop});
+    }
+    return timedStops;
+  }
+
   List<Planning> _getPlanningsFromJSON(Map<String, dynamic> data) {
     List<Planning> plannings = <Planning>[];
     List<dynamic> planningObjs = data['plannings'];
