@@ -1,16 +1,12 @@
 # bus_guide
 
-A new Flutter project.
+A planning handler for bus drivers project in Flutter.
 
-## Getting Started
+## Things to do to compile
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Setup Flutter dev environment
+- Get your own Google Maps API key and google-services.json
+- Fill and rename AndroidManifestTemplate.xml and AppDelegateTemplate.swift
+- Replace google-services-template.json
+- Create and fill your own .env file
+- If you wish to use auto-login, create your own account_pass.json file

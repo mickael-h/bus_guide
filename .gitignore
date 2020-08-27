@@ -9,6 +9,7 @@
 .history
 .svn/
 .env
+assets/config/account_pass.json
 
 # IntelliJ related
 *.iml
