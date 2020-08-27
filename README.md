@@ -1,6 +1,6 @@
 # bus_guide
 
-A planning handler for bus drivers project in Flutter.
+A schedule manager for bus drivers project in Flutter.
 
 ## Things to do to compile
 
