@@ -24,8 +24,10 @@ class MapScreen extends StatelessWidget {
         );
       }),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Get.bottomSheet(PlanningPanel(
-            Get.find<PlanningController>().currentPlanning.value)),
+        onPressed: () => Get.bottomSheet(
+          PlanningPanel(),
+          backgroundColor: Colors.white,
+        ),
         label: Text('Voir la ligne'),
         icon: Icon(Icons.location_on),
       ),

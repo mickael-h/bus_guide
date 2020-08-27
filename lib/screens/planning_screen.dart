@@ -23,7 +23,6 @@ class PlanningListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
         children: Get.find<PlanningController>()
                 .planningList
                 .value
