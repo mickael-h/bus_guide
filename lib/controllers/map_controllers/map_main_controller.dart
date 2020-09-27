@@ -5,6 +5,7 @@ class MapMainController extends GetxController {
   final PositioningController _posController =
       Get.find<PositioningController>();
   final MarkersController _markersController = Get.find<MarkersController>();
+  final RoutingController _routingController = Get.find<RoutingController>();
 
   initController(GoogleMapController controller) async {
     _completer.complete(controller);
@@ -14,6 +15,8 @@ class MapMainController extends GetxController {
 
   startPlanning(Planning planning) {
     _markersController.setMarkersForTrip(planning?.schedule?.trip);
+    Stop firstStop = planning?.schedule?.trip?.stops[0];
+    setDestination(firstStop?.position);
   }
 
   CameraPosition getCameraPosition() {
@@ -22,6 +25,14 @@ class MapMainController extends GetxController {
 
   Set<Marker> getMarkers() {
     return _markersController.markers.value;
+  }
+
+  setDestination(LatLng to) {
+    _routingController.setDestination(to);
+  }
+
+  Iterable<Polyline> getPolylines() {
+    return _routingController.polylines.values;
   }
 
   @override

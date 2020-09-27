@@ -1,12 +1,15 @@
 import 'package:bus_guide/index.dart';
 
+// France: LatLng(46.659917501970945, 2.2704486921429634)
+const LatLng DEFAULT_POSITION = LatLng(46.202773227803945, 5.220320206135511);
+
 class PositioningController extends GetxController {
+  final Rx<LocationData> currentLocation = new Rx<LocationData>();
   final Rx<CameraPosition> cameraPosition = CameraPosition(
-    target: LatLng(46.202773227803945,
-        5.220320206135511), // France: LatLng(46.659917501970945, 2.2704486921429634),
+    target: DEFAULT_POSITION,
     zoom: 14.8373, // Whole country: 6.3343,
   ).obs;
-  final Location _location = new Location();
+  final Location _locationService = new Location();
   StreamSubscription _locationStreamSub;
   GoogleMapController _controller;
 
@@ -39,12 +42,12 @@ class PositioningController extends GetxController {
 
   _checkPermissions() async {
     PermissionStatus permission;
-    permission = await _location.hasPermission();
+    permission = await _locationService.hasPermission();
     if (permission == PermissionStatus.denied) {
-      permission = await _location.requestPermission();
+      permission = await _locationService.requestPermission();
       if (permission == PermissionStatus.deniedForever) {
         await _showRationalePopup();
-        permission = await _location.requestPermission();
+        permission = await _locationService.requestPermission();
       }
     }
     return permission == PermissionStatus.granted;
@@ -73,8 +76,9 @@ class PositioningController extends GetxController {
       return;
     }
     _locationStreamSub =
-        _location.onLocationChanged.listen((LocationData currentLocation) {
-      print('$currentLocation à ${currentLocation.time}');
+        _locationService.onLocationChanged.listen((LocationData location) {
+      print('$location à ${location.time}');
+      currentLocation.value = location;
     });
   }
 

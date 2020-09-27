@@ -15,6 +15,7 @@ class MapScreen extends StatelessWidget {
           initialCameraPosition: mapController.getCameraPosition(),
           myLocationButtonEnabled: true,
           myLocationEnabled: true,
+          polylines: Set<Polyline>.of(mapController.getPolylines()),
           onMapCreated: (GoogleMapController controller) {
             mapController.initController(controller);
             mapController.startPlanning(

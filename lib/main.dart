@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Test',
+      title: 'Bus Guide',
       home: LoginScreen(),
       initialBinding: LoginBinding(),
       theme: ThemeData(

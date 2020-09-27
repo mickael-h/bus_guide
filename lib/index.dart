@@ -23,6 +23,7 @@ export 'controllers/bindings/login_bindings.dart';
 export 'controllers/login_controllers/login_input_controller.dart';
 export 'controllers/map_controllers/positioning_controller.dart';
 export 'controllers/map_controllers/map_main_controller.dart';
+export 'controllers/map_controllers/routing_controller.dart';
 export 'controllers/map_controllers/markers_controller.dart';
 export 'controllers/login_controllers/login_screen_controller.dart';
 export 'controllers/login_controllers/firebase_login_controller.dart';
