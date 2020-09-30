@@ -37,6 +37,7 @@ dependencies:
   flutter_polyline_points: ^0.2.3
   intl: ^0.16.1
   date_format: ^1.0.8
+  supercharged: ^1.10.0
   flutter:
     sdk: flutter
 
