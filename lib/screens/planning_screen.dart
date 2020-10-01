@@ -34,16 +34,9 @@ class PlanningListView extends StatelessWidget {
   }
 
   Widget getPlanningViewFromData(Planning data) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(width: 0.8),
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-      child: ListTile(
-        title: Text('${data.lineName}, ${data.schedule.name}'),
-        onTap: () => Get.find<PlanningController>().pickPlanning(data),
-      ),
+    return PlanningListEntry(
+      text: '${data.lineName}, ${data.schedule.name}',
+      onTap: () => Get.find<PlanningController>().pickPlanning(data),
     );
   }
 }
