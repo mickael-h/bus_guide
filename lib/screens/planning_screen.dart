@@ -18,14 +18,12 @@ class PlanningScreen extends StatelessWidget {
   }
 }
 
-class PlanningListView extends StatelessWidget {
+class PlanningListView extends GetView<PlanningController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => ListView(
-        children: Get.find<PlanningController>()
-                .planningList
-                .value
+        children: controller.planningList.value
                 ?.map(getPlanningViewFromData)
                 ?.toList(growable: false) ??
             [],
@@ -36,7 +34,7 @@ class PlanningListView extends StatelessWidget {
   Widget getPlanningViewFromData(Planning data) {
     return PlanningListEntry(
       text: '${data.lineName}, ${data.schedule.name}',
-      onTap: () => Get.find<PlanningController>().pickPlanning(data),
+      onTap: () => controller.pickPlanning(data),
     );
   }
 }
