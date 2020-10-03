@@ -1,6 +1,6 @@
 import 'package:bus_guide/index.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends GetView<LoginScreenController> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
         hintText: 'Login',
         border: const OutlineInputBorder(),
       ),
-      onChanged: (txt) => Get.find<LoginInputController>().setLogin(txt),
+      onChanged: (txt) => controller.setLogin(txt),
     );
   }
 
@@ -66,16 +66,14 @@ class LoginScreen extends StatelessWidget {
               hintText: 'Password',
               border: const OutlineInputBorder(),
             ),
-            obscureText: Get.find<LoginInputController>().hidePassword.value,
-            onChanged: (txt) =>
-                Get.find<LoginInputController>().setPassword(txt),
+            obscureText: controller.hidePassword.value,
+            onChanged: (txt) => controller.setPassword(txt),
           ),
         ),
         Obx(
           () => FlatButton(
-            onPressed: () =>
-                Get.find<LoginInputController>().togglePasswordVisibility(),
-            child: Icon(Get.find<LoginInputController>().hidePassword.value
+            onPressed: () => controller.togglePasswordVisibility(),
+            child: Icon(controller.hidePassword.value
                 ? Icons.visibility
                 : Icons.visibility_off),
           ),
@@ -88,7 +86,7 @@ class LoginScreen extends StatelessWidget {
     return RaisedButton(
       child: Text('Connect'),
       onPressed: () {
-        Get.find<LoginScreenController>().onConnectButtonPressed();
+        controller.onConnectButtonPressed();
       },
     );
   }

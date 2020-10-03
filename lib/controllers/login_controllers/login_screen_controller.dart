@@ -7,4 +7,20 @@ class LoginScreenController extends GetxController {
       Get.to(PlanningScreen(), binding: PlanningBindings());
     }
   }
+
+  final RxString login = ''.obs;
+  final RxString password = ''.obs;
+  final RxBool hidePassword = true.obs;
+
+  togglePasswordVisibility() {
+    hidePassword.value = !hidePassword.value;
+  }
+
+  setLogin(String newLogin) {
+    login.value = newLogin;
+  }
+
+  setPassword(String newPassword) {
+    password.value = newPassword;
+  }
 }

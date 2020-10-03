@@ -20,7 +20,6 @@ export 'screens/planning_screen.dart';
 export 'controllers/bindings/planning_bindings.dart';
 export 'controllers/bindings/map_screen_bindings.dart';
 export 'controllers/bindings/login_bindings.dart';
-export 'controllers/login_controllers/login_input_controller.dart';
 export 'controllers/map_controllers/positioning_controller.dart';
 export 'controllers/map_controllers/map_main_controller.dart';
 export 'controllers/map_controllers/routing_controller.dart';

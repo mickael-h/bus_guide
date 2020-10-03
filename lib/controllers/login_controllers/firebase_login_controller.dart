@@ -2,7 +2,7 @@ import 'package:bus_guide/index.dart';
 
 class FirebaseLoginController extends GetxController {
   Future<bool> connect() async {
-    LoginInputController inputCtrlr = Get.find<LoginInputController>();
+    LoginScreenController inputCtrlr = Get.find<LoginScreenController>();
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
       UserCredential res;
