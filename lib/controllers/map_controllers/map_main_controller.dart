@@ -3,20 +3,20 @@ import 'package:bus_guide/index.dart';
 class MapMainController extends GetxController {
   final Completer<GoogleMapController> _completer = Completer();
 
-  onMapCreated(GoogleMapController mapsController) {
+  void onMapCreated(GoogleMapController mapsController) {
     _initController(mapsController);
     _startPlanning(Get.find<PlanningController>().currentPlanning.value);
   }
 
-  _initController(GoogleMapController controller) async {
+  void _initController(GoogleMapController controller) async {
     _completer.complete(controller);
-    final GoogleMapController mapController = await _completer.future;
+    final mapController = await _completer.future;
     Get.find<PositioningController>().init(mapController);
   }
 
-  _startPlanning(Planning planning) {
+  void _startPlanning(Planning planning) {
     Get.find<MarkersController>().setMarkersForTrip(planning?.schedule?.trip);
-    Stop firstStop = planning?.schedule?.trip?.stops[0];
+    final firstStop = planning?.schedule?.trip?.stops[0];
     setDestination(firstStop?.position);
   }
 
@@ -28,7 +28,7 @@ class MapMainController extends GetxController {
     return Get.find<MarkersController>().markers.value;
   }
 
-  setDestination(LatLng to) {
+  void setDestination(LatLng to) {
     Get.find<RoutingController>().setDestination(to);
   }
 

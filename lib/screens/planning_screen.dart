@@ -1,6 +1,6 @@
 import 'package:bus_guide/index.dart';
 
-class PlanningScreen extends StatelessWidget {
+class PlanningScreen extends GetView<PlanningController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,27 +11,24 @@ class PlanningScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(flex: 0, child: Calendar()),
-          Expanded(flex: 1, child: PlanningListView()),
+          Expanded(flex: 1, child: _getPlanningListView()),
         ],
       ),
     );
   }
-}
 
-class PlanningListView extends GetView<PlanningController> {
-  @override
-  Widget build(BuildContext context) {
+  Widget _getPlanningListView() {
     return Obx(
       () => ListView(
         children: controller.planningList.value
-                ?.map(getPlanningViewFromData)
+                ?.map(_getPlanningEntryFromData)
                 ?.toList(growable: false) ??
             [],
       ),
     );
   }
 
-  Widget getPlanningViewFromData(Planning data) {
+  Widget _getPlanningEntryFromData(Planning data) {
     return PlanningListEntry(
       text: '${data.lineName}, ${data.schedule.name}',
       onTap: () => controller.pickPlanning(data),

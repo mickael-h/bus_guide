@@ -28,7 +28,7 @@ class LoginScreen extends GetView<LoginScreenController> {
     );
   }
 
-  _getLoginLayout() {
+  Widget _getLoginLayout() {
     return Center(
       child: FractionallySizedBox(
         widthFactor: 0.75,
@@ -46,7 +46,7 @@ class LoginScreen extends GetView<LoginScreenController> {
     );
   }
 
-  _getLoginInput() {
+  Widget _getLoginInput() {
     return TextField(
       decoration: InputDecoration(
         hintText: 'Login',
@@ -56,7 +56,7 @@ class LoginScreen extends GetView<LoginScreenController> {
     );
   }
 
-  _getPasswordInput() {
+  Widget _getPasswordInput() {
     return Stack(
       alignment: Alignment.centerRight,
       children: [
@@ -82,7 +82,7 @@ class LoginScreen extends GetView<LoginScreenController> {
     );
   }
 
-  _getConnectButton() {
+  Widget _getConnectButton() {
     return RaisedButton(
       child: Text('Connect'),
       onPressed: () {

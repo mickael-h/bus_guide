@@ -1,9 +1,9 @@
 import 'package:bus_guide/index.dart';
 
 class PlanningListEntry extends StatelessWidget {
-  final text;
-  final onTap;
-  const PlanningListEntry({Key key, this.text, this.onTap}) : super(key: key);
+  final String text;
+  final void Function() onTap;
+  PlanningListEntry({Key key, this.text, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class PlanningListEntry extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: ListTile(
         title: Text(text),
-        onTap: this.onTap,
+        onTap: onTap,
       ),
     );
   }

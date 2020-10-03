@@ -7,18 +7,17 @@ class AppConfig {
 
   AppConfig({this.autoLogin, this.googleAPIKey});
 
-  static init(String env, String googleAPIKey) async {
+  static void init(String env, String googleAPIKey) async {
     env = env ?? 'prod';
-    final String contents =
-        await rootBundle.loadString('assets/config/$env.json');
-    final dynamic json = jsonDecode(contents);
-    Map<String, dynamic> autoLogin = json['autoLogin'];
+    final contents = await rootBundle.loadString('assets/config/$env.json');
+    final json = jsonDecode(contents);
+    final autoLogin = json['autoLogin'];
     if (autoLogin != null) {
       autoLogin['password'] = jsonDecode(await rootBundle
           .loadString('assets/config/account_pass.json'))['password'];
     }
     instance = AppConfig(
-      autoLogin: json['autoLogin'],
+      autoLogin: json['autoLogin'] as Map<String, dynamic>,
       googleAPIKey: googleAPIKey,
     );
   }

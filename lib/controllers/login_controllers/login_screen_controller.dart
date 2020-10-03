@@ -1,10 +1,10 @@
 import 'package:bus_guide/index.dart';
 
 class LoginScreenController extends GetxController {
-  onConnectButtonPressed() async {
-    bool isConnected = await Get.find<FirebaseLoginController>().connect();
+  void onConnectButtonPressed() async {
+    final isConnected = await Get.find<FirebaseLoginController>().connect();
     if (isConnected) {
-      Get.to(PlanningScreen(), binding: PlanningBindings());
+      unawaited_futures(Get.to(PlanningScreen(), binding: PlanningBindings()));
     }
   }
 
@@ -12,15 +12,15 @@ class LoginScreenController extends GetxController {
   final RxString password = ''.obs;
   final RxBool hidePassword = true.obs;
 
-  togglePasswordVisibility() {
+  void togglePasswordVisibility() {
     hidePassword.value = !hidePassword.value;
   }
 
-  setLogin(String newLogin) {
+  void setLogin(String newLogin) {
     login.value = newLogin;
   }
 
-  setPassword(String newPassword) {
+  void setPassword(String newPassword) {
     password.value = newPassword;
   }
 }

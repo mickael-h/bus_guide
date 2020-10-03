@@ -8,9 +8,9 @@ class Stop extends FetchedFBModel {
     print('new stop $data');
     try {
       done = false;
-      position =
-          LatLng(data['position']['_latitude'], data['position']['_longitude']);
-      name = data['name'];
+      position = LatLng(data['position']['_latitude'] as double,
+          data['position']['_longitude'] as double);
+      name = data['name'] as String;
       hasError = false;
     } catch (e) {
       errorMessage = e.toString();

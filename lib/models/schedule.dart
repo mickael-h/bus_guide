@@ -8,12 +8,12 @@ class Schedule extends FetchedFBModel {
   Schedule(Map<String, dynamic> data) {
     print('new schedule $data');
     try {
-      isReversed = data['is_reversed'];
-      name = data['name'];
+      isReversed = data['is_reversed'] as bool;
+      name = data['name'] as String;
       times = (data['times'] as List)
-          .map((e) => Timestamp(e['_seconds'], e['_nanoseconds']))
+          .map((e) => Timestamp(e['_seconds'] as int, e['_nanoseconds'] as int))
           .toList(growable: false);
-      trip = Trip(data['trip']);
+      trip = Trip(data['trip'] as Map<String, dynamic>);
       hasError = false;
     } catch (e) {
       errorMessage = e.toString();

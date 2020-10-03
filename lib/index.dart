@@ -42,4 +42,5 @@ export 'package:table_calendar/table_calendar.dart';
 export 'package:flutter_polyline_points/flutter_polyline_points.dart';
 export 'package:intl/date_symbol_data_local.dart';
 export 'package:supercharged/supercharged.dart';
+export 'package:pedantic/analysis_options.1.9.0.yaml';
 export 'widgets/planning_list_entry.dart';

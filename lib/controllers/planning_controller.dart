@@ -4,7 +4,7 @@ class PlanningController extends GetxController {
   final RxList<Planning> planningList = RxList<Planning>();
   final Rx<Planning> currentPlanning = Rx<Planning>();
 
-  fetchPlanningfor(DateTime date) async {
+  void fetchPlanningfor(DateTime date) async {
     // Should work, but doesn't.
     // See: https://github.com/FirebaseExtended/flutterfire/issues/3290
     // final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
@@ -14,35 +14,34 @@ class PlanningController extends GetxController {
     //   'date': '2020-08-20',
     // });
     // print('received value: ${result.data}');
-    String formattedDate = formatDate(date, ['yyyy', '-', 'mm', '-', 'dd']);
-    Map<String, dynamic> data = await CloudFunctionTools.callFunction(
-        'getPlanning',
+    final formattedDate = formatDate(date, ['yyyy', '-', 'mm', '-', 'dd']);
+    final data = await CloudFunctionTools.callFunction('getPlanning',
         data: {'date': formattedDate});
-    List<Planning> plannings = _getPlanningsFromJSON(data);
+    final plannings = _getPlanningsFromJSON(data);
     planningList.value = plannings;
   }
 
   List<Map<String, dynamic>> getTimedStops() {
-    Planning planning = currentPlanning.value;
-    Schedule schedule = planning?.schedule;
-    List<Stop> stops = schedule?.trip?.stops;
+    final planning = currentPlanning.value;
+    final schedule = planning?.schedule;
+    var stops = schedule?.trip?.stops;
     if (schedule?.isReversed ?? false) {
-      stops = stops?.reversed;
+      stops = stops?.reversed as List<Stop>;
     }
-    List<Map<String, dynamic>> timedStops = [];
+    final timedStops = <Map<String, dynamic>>[];
     for (var i = 0; i < schedule?.times?.length; i++) {
-      DateTime date = schedule?.times[i].toDate();
-      Stop stop = schedule?.trip?.stops[i];
-      timedStops.add({"time": date, "stop": stop});
+      final date = schedule?.times[i].toDate();
+      final stop = schedule?.trip?.stops[i];
+      timedStops.add({'time': date, 'stop': stop});
     }
     return timedStops;
   }
 
   List<Planning> _getPlanningsFromJSON(Map<String, dynamic> data) {
-    List<Planning> plannings = <Planning>[];
-    List<dynamic> planningObjs = data['plannings'];
-    for (Map<String, dynamic> planObj in planningObjs) {
-      Planning planning = Planning(planObj);
+    final plannings = <Planning>[];
+    final planningObjs = data['plannings'] as List<Map<String, dynamic>>;
+    for (var planObj in planningObjs) {
+      final planning = Planning(planObj);
       if (!planning.hasError) {
         plannings.add(planning);
       }
@@ -50,11 +49,12 @@ class PlanningController extends GetxController {
     return plannings;
   }
 
-  pickPlanning(Planning data) async {
+  void pickPlanning(Planning data) async {
     currentPlanning.value = data;
-    Get.to(
+
+    unawaited_futures(Get.to(
       MapScreen(),
       binding: MapScreenBindings(),
-    );
+    ));
   }
 }

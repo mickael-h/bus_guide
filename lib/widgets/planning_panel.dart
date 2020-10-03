@@ -2,28 +2,26 @@ import 'package:bus_guide/index.dart';
 
 import 'planning_list_entry.dart';
 
-class PlanningPanel extends StatelessWidget {
-  final PlanningController planningController = Get.find<PlanningController>();
-  final RoutingController routingController = Get.find<RoutingController>();
-
+class PlanningPanel extends GetView<PlanningController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => ListView(
-        children: planningController
+        children: controller
             .getTimedStops()
-            ?.map((Map<String, dynamic> stop) => _getStopViewFromData(stop))
+            ?.map(_getStopViewFromData)
             ?.toList(growable: false),
       ),
     );
   }
 
   Widget _getStopViewFromData(Map<String, dynamic> timedStop) {
-    String formattedDate = formatDate(timedStop["time"], ['HH', ':', 'nn']);
-    Stop stop = timedStop["stop"];
+    final formattedDate =
+        formatDate(timedStop['time'] as DateTime, ['HH', ':', 'nn']);
+    final stop = timedStop['stop'] as Stop;
     return PlanningListEntry(
       text: '$formattedDate: ${stop.name}',
-      onTap: () => routingController.setDestination(stop.position),
+      onTap: () => Get.find<RoutingController>().setDestination(stop.position),
     );
   }
 }

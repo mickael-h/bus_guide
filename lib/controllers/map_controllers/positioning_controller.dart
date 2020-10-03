@@ -4,17 +4,17 @@ import 'package:bus_guide/index.dart';
 const LatLng DEFAULT_POSITION = LatLng(46.202773227803945, 5.220320206135511);
 
 class PositioningController extends GetxController {
-  final Rx<LocationData> currentLocation = new Rx<LocationData>();
+  final Rx<LocationData> currentLocation = Rx<LocationData>();
   final Rx<CameraPosition> cameraPosition = CameraPosition(
     target: DEFAULT_POSITION,
     zoom: 14.8373, // Whole country: 6.3343,
   ).obs;
-  final Location _locationService = new Location();
+  final Location _locationService = Location();
   StreamSubscription _locationStreamSub;
   LocationData previousLocation;
   // GoogleMapController _controller;
 
-  init(GoogleMapController mapController) {
+  void init(GoogleMapController mapController) {
     // _controller = mapController;
     _startLocationService();
   }
@@ -41,7 +41,7 @@ class PositioningController extends GetxController {
   //   );
   // }
 
-  _checkPermissions() async {
+  Future<bool> _checkPermissions() async {
     PermissionStatus permission;
     permission = await _locationService.hasPermission();
     if (permission == PermissionStatus.denied) {
@@ -55,7 +55,7 @@ class PositioningController extends GetxController {
     return permission == PermissionStatus.granted;
   }
 
-  _showRationalePopup() async {
+  Future<void> _showRationalePopup() async {
     await Get.defaultDialog(
       content: Text(
         'La localisation GPS est désactivée pour cette application. Le guidage ne peut pas fonctionner sans cette permission. Souhaitez-vous l\'activer ?',
@@ -73,7 +73,7 @@ class PositioningController extends GetxController {
     );
   }
 
-  _startLocationService() async {
+  Future<void> _startLocationService() async {
     if (!await _checkPermissions()) {
       return;
     }

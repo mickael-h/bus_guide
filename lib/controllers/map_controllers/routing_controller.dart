@@ -7,10 +7,10 @@ class RoutingController extends GetxController {
   RxMap<PolylineId, Polyline> polylines = <PolylineId, Polyline>{}.obs;
   final PositioningController _positioningController =
       Get.find<PositioningController>();
-  final Rx<LatLng> currentDestination = new Rx<LatLng>();
+  final Rx<LatLng> currentDestination = Rx<LatLng>();
   StreamSubscription _destinationStreamSub;
 
-  setDestination(LatLng to) {
+  void setDestination(LatLng to) {
     removeDestination();
     currentDestination.value = to;
     if (_positioningController.currentLocation.value != null) {
@@ -20,7 +20,7 @@ class RoutingController extends GetxController {
         _positioningController.currentLocation.listen(_onLocationChange);
   }
 
-  removeDestination() {
+  void removeDestination() {
     if (_destinationStreamSub != null) {
       _destinationStreamSub.cancel();
       _destinationStreamSub = null;
@@ -28,7 +28,7 @@ class RoutingController extends GetxController {
     }
   }
 
-  _onLocationChange(LocationData newLocation) {
+  void _onLocationChange(LocationData newLocation) {
     if (!_isLocationCloseToGuidanceLine(newLocation)) {
       _updateRoutePolyline(newLocation);
     }
@@ -36,22 +36,22 @@ class RoutingController extends GetxController {
 
   bool _isLocationCloseToGuidanceLine(LocationData location) {
     const TOLERANCE = 30; //meters
-    final mp.LatLng position = mp.LatLng(
+    final position = mp.LatLng(
       location.latitude,
       location.longitude,
     );
-    final List<mp.LatLng> guidePolyline =
-        getListOfPointsFromPolyline('guidance');
+    final guidePolyline = getListOfPointsFromPolyline('guidance');
 
     if (guidePolyline == null) {
       return false;
     }
 
-    double dist = double.maxFinite;
-    for (int i = 1; i < guidePolyline.length; i++) {
-      mp.LatLng start = guidePolyline[i - 1];
-      mp.LatLng end = guidePolyline[i];
-      dist = min(dist, mp.PolygonUtil.distanceToLine(position, start, end));
+    var dist = double.maxFinite;
+    for (var i = 1; i < guidePolyline.length; i++) {
+      final start = guidePolyline[i - 1];
+      final end = guidePolyline[i];
+      dist = min(dist, mp.PolygonUtil.distanceToLine(position, start, end))
+          as double;
     }
 
     return dist < TOLERANCE;
@@ -60,27 +60,26 @@ class RoutingController extends GetxController {
   List<mp.LatLng> getListOfPointsFromPolyline(String id) {
     return polylines[PolylineId(id)]
         ?.points
-        ?.map((LatLng pt) => new mp.LatLng(
+        ?.map((LatLng pt) => mp.LatLng(
               pt.latitude,
               pt.longitude,
             ))
         ?.toList();
   }
 
-  _updateRoutePolyline(LocationData newLocation) {
-    LatLng pos = new LatLng(newLocation.latitude, newLocation.longitude);
+  void _updateRoutePolyline(LocationData newLocation) {
+    final pos = LatLng(newLocation.latitude, newLocation.longitude);
     setPolyline(pos, currentDestination.value, 'guidance');
   }
 
-  setPolyline(LatLng start, LatLng destination, String id) async {
-    PolylineResult result = await _getRoutePolyline(start, destination);
-    Polyline polyline = _createPolylineFromResult(result, id);
+  void setPolyline(LatLng start, LatLng destination, String id) async {
+    final result = await _getRoutePolyline(start, destination);
+    final polyline = _createPolylineFromResult(result, id);
     polylines[polyline.polylineId] = polyline;
   }
 
   Future<PolylineResult> _getRoutePolyline(LatLng start, LatLng destination) {
-    PolylinePoints polylinePoints = PolylinePoints();
-    return polylinePoints.getRouteBetweenCoordinates(
+    return PolylinePoints().getRouteBetweenCoordinates(
       AppConfig.instance.googleAPIKey,
       PointLatLng(start.latitude, start.longitude),
       PointLatLng(destination.latitude, destination.longitude),
@@ -89,16 +88,15 @@ class RoutingController extends GetxController {
   }
 
   Polyline _createPolylineFromResult(PolylineResult result, String id) {
-    List<LatLng> polylineCoordinates = [];
+    final polylineCoordinates = <LatLng>[];
     if (result.points.isNotEmpty) {
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
 
-    PolylineId pId = PolylineId(id);
     return Polyline(
-      polylineId: pId,
+      polylineId: PolylineId(id),
       color: Colors.red,
       points: polylineCoordinates,
       width: 3,

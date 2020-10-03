@@ -4,7 +4,7 @@ import 'package:bus_guide/index.dart';
 class CloudFunctionTools {
   static Future<Map<String, dynamic>> callFunction(String functionName,
       {Map<String, dynamic> data}) async {
-    final String url =
+    final url =
         'https://europe-west1-gestion-trajets.cloudfunctions.net/$functionName';
     try {
       String dataStr;
@@ -13,17 +13,17 @@ class CloudFunctionTools {
       } else {
         dataStr = '{}';
       }
-      Map<String, String> headers = <String, String>{
+      final headers = <String, String>{
         'Content-Type': 'application/json',
         'Authorization':
             'Bearer ${await FirebaseAuth.instance?.currentUser?.getIdToken()}',
       };
-      http.Response response = await http.post(
+      final response = await http.post(
         url,
         headers: headers,
         body: '{"data":$dataStr}',
       );
-      return jsonDecode(response?.body)['result'];
+      return jsonDecode(response?.body)['result'] as Map<String, dynamic>;
     } catch (e) {
       print('error retrieving data: $e');
       return <String, dynamic>{};

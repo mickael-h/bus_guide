@@ -6,9 +6,10 @@ class Trip extends FetchedFBModel {
   Trip(Map<String, dynamic> data) {
     print('new trip $data');
     try {
-      name = data['name'];
-      stops =
-          (data['stops'] as List).map((e) => Stop(e)).toList(growable: false);
+      name = data['name'] as String;
+      stops = (data['stops'] as List)
+          .map((e) => Stop(e as Map<String, dynamic>))
+          .toList(growable: false);
       hasError = false;
     } catch (e) {
       errorMessage = e.toString();

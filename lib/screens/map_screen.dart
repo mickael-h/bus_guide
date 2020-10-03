@@ -3,7 +3,7 @@ import 'package:bus_guide/index.dart';
 class MapScreen extends GetView<MapMainController> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text('Guidage'),
         centerTitle: true,
