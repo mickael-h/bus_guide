@@ -47,4 +47,3 @@ app.*.map.json
 
 # Google
 android/app/google-services.json
-ios/Runner/AppDelegate.swift
