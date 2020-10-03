@@ -25,7 +25,7 @@ class MapMainController extends GetxController {
   }
 
   Set<Marker> getMarkers() {
-    return Get.find<MarkersController>().markers.value;
+    return Get.find<MarkersController>().markers;
   }
 
   void setDestination(LatLng to) {

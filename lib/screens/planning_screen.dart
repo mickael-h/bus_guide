@@ -20,7 +20,7 @@ class PlanningScreen extends GetView<PlanningController> {
   Widget _getPlanningListView() {
     return Obx(
       () => ListView(
-        children: controller.planningList.value
+        children: controller.planningList
                 ?.map(_getPlanningEntryFromData)
                 ?.toList(growable: false) ??
             [],

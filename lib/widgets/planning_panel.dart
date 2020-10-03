@@ -1,5 +1,4 @@
-import 'package:bus_guide/index.dart';
-
+import '../index.dart';
 import 'planning_list_entry.dart';
 
 class PlanningPanel extends GetView<PlanningController> {

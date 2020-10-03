@@ -1,7 +1,7 @@
 import 'package:bus_guide/index.dart';
 
 class MarkersController extends GetxController {
-  final Rx<Set<Marker>> markers = <Marker>{}.obs;
+  final RxSet<Marker> markers = <Marker>{}.obs;
 
   void setMarkersForTrip(Trip trip) {
     final newMarkers = <Marker>{};
