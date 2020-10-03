@@ -11,10 +11,11 @@ class PositioningController extends GetxController {
   ).obs;
   final Location _locationService = new Location();
   StreamSubscription _locationStreamSub;
-  GoogleMapController _controller;
+  LocationData previousLocation;
+  // GoogleMapController _controller;
 
   init(GoogleMapController mapController) {
-    _controller = mapController;
+    // _controller = mapController;
     _startLocationService();
   }
 
@@ -50,6 +51,7 @@ class PositioningController extends GetxController {
         permission = await _locationService.requestPermission();
       }
     }
+    print('permission: $permission');
     return permission == PermissionStatus.granted;
   }
 
@@ -77,7 +79,7 @@ class PositioningController extends GetxController {
     }
     _locationStreamSub =
         _locationService.onLocationChanged.listen((LocationData location) {
-      print('$location à ${location.time}');
+      previousLocation = currentLocation.value;
       currentLocation.value = location;
     });
   }

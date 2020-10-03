@@ -38,6 +38,7 @@ dependencies:
   intl: ^0.16.1
   date_format: ^1.0.8
   supercharged: ^1.10.0
+  maps_toolkit: ^1.1.0+2
   flutter:
     sdk: flutter
 
