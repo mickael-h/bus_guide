@@ -1,6 +1,6 @@
 import 'package:bus_guide/index.dart';
 
-class MapScreen extends StatelessWidget {
+class MapScreen extends GetView<MapMainController> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -8,22 +8,17 @@ class MapScreen extends StatelessWidget {
         title: Text('Guidage'),
         centerTitle: true,
       ),
-      body: Obx(() {
-        MapMainController mapController = Get.find<MapMainController>();
-        return GoogleMap(
+      body: Obx(
+        () => GoogleMap(
           mapType: MapType.normal,
-          initialCameraPosition: mapController.getCameraPosition(),
+          initialCameraPosition: controller.getCameraPosition(),
           myLocationButtonEnabled: true,
           myLocationEnabled: true,
-          polylines: Set<Polyline>.of(mapController.getPolylines()),
-          onMapCreated: (GoogleMapController controller) {
-            mapController.initController(controller);
-            mapController.startPlanning(
-                Get.find<PlanningController>().currentPlanning.value);
-          },
-          markers: mapController.getMarkers(),
-        );
-      }),
+          polylines: Set<Polyline>.of(controller.getPolylines()),
+          onMapCreated: controller.onMapCreated,
+          markers: controller.getMarkers(),
+        ),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Get.bottomSheet(
           PlanningPanel(),

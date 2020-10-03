@@ -2,37 +2,38 @@ import 'package:bus_guide/index.dart';
 
 class MapMainController extends GetxController {
   final Completer<GoogleMapController> _completer = Completer();
-  final PositioningController _posController =
-      Get.find<PositioningController>();
-  final MarkersController _markersController = Get.find<MarkersController>();
-  final RoutingController _routingController = Get.find<RoutingController>();
 
-  initController(GoogleMapController controller) async {
-    _completer.complete(controller);
-    final GoogleMapController mapController = await _completer.future;
-    _posController.init(mapController);
+  onMapCreated(GoogleMapController mapsController) {
+    _initController(mapsController);
+    _startPlanning(Get.find<PlanningController>().currentPlanning.value);
   }
 
-  startPlanning(Planning planning) {
-    _markersController.setMarkersForTrip(planning?.schedule?.trip);
+  _initController(GoogleMapController controller) async {
+    _completer.complete(controller);
+    final GoogleMapController mapController = await _completer.future;
+    Get.find<PositioningController>().init(mapController);
+  }
+
+  _startPlanning(Planning planning) {
+    Get.find<MarkersController>().setMarkersForTrip(planning?.schedule?.trip);
     Stop firstStop = planning?.schedule?.trip?.stops[0];
     setDestination(firstStop?.position);
   }
 
   CameraPosition getCameraPosition() {
-    return _posController.cameraPosition.value;
+    return Get.find<PositioningController>().cameraPosition.value;
   }
 
   Set<Marker> getMarkers() {
-    return _markersController.markers.value;
+    return Get.find<MarkersController>().markers.value;
   }
 
   setDestination(LatLng to) {
-    _routingController.setDestination(to);
+    Get.find<RoutingController>().setDestination(to);
   }
 
   Iterable<Polyline> getPolylines() {
-    return _routingController.polylines.values;
+    return Get.find<RoutingController>().polylines.values;
   }
 
   @override
