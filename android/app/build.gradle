@@ -44,6 +44,9 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders = [
+          googleApiKey:localProperties.getProperty('google.apiKey')
+        ]
         multiDexEnabled true
     }
 

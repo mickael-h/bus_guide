@@ -48,4 +48,3 @@ app.*.map.json
 # Google
 android/app/google-services.json
 ios/Runner/AppDelegate.swift
-android/app/src/main/AndroidManifest.xml

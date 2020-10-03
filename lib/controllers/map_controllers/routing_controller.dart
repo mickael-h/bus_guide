@@ -11,7 +11,6 @@ class RoutingController extends GetxController {
   StreamSubscription _destinationStreamSub;
 
   setDestination(LatLng to) {
-    print('set destination $to');
     removeDestination();
     currentDestination.value = to;
     if (_positioningController.currentLocation.value != null) {
@@ -35,14 +34,18 @@ class RoutingController extends GetxController {
     }
   }
 
-  _isLocationCloseToGuidanceLine(LocationData location) {
-    const TOLERANCE = 15; //meters
+  bool _isLocationCloseToGuidanceLine(LocationData location) {
+    const TOLERANCE = 30; //meters
     final mp.LatLng position = mp.LatLng(
       location.latitude,
       location.longitude,
     );
     final List<mp.LatLng> guidePolyline =
         getListOfPointsFromPolyline('guidance');
+
+    if (guidePolyline == null) {
+      return false;
+    }
 
     double dist = double.maxFinite;
     for (int i = 1; i < guidePolyline.length; i++) {
