@@ -4,7 +4,9 @@ class LoginBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<LoginScreenController>(() => LoginScreenController());
-    Get.lazyPut<FirebaseLoginController>(() => FirebaseLoginController());
+    Get.lazyPut<FirebaseLoginController>(
+      () => FirebaseLoginController(auth: FirebaseAuth.instance),
+    );
     Get.lazyPut<UserController>(() => UserController());
   }
 }

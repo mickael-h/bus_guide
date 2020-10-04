@@ -10,7 +10,7 @@ void main() {
 
   setUp(() {
     controller = PlanningController(cloudFunctionTools: functionTools);
-    final testPlanning = <String, dynamic>{
+    const testPlanning = <String, dynamic>{
       'plannings': [
         {
           'date': {'_seconds': 1597874400, '_nanoseconds': 0},

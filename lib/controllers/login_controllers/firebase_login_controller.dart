@@ -1,10 +1,13 @@
 import 'package:bus_guide/index.dart';
 
 class FirebaseLoginController extends GetxController {
+  final FirebaseAuth auth;
+
+  FirebaseLoginController({this.auth});
+
   Future<bool> connect() async {
     final inputCtrlr = Get.find<LoginScreenController>();
     try {
-      final auth = FirebaseAuth.instance;
       UserCredential res;
       if (AppConfig.instance?.autoLogin != null) {
         res = await auth.signInWithEmailAndPassword(
