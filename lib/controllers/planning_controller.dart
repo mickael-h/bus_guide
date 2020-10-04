@@ -52,7 +52,7 @@ class PlanningController extends GetxController {
   void pickPlanning(Planning data) async {
     currentPlanning.value = data;
 
-    unawaited_futures(Get.to(
+    unawaited(Get.to(
       MapScreen(),
       binding: MapScreenBindings(),
     ));
