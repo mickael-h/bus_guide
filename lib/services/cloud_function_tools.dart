@@ -2,7 +2,15 @@ import 'package:http/http.dart' as http;
 import 'package:bus_guide/index.dart';
 
 class CloudFunctionTools {
-  static Future<Map<String, dynamic>> callFunction(String functionName,
+  static final CloudFunctionTools _singleton = CloudFunctionTools._internal();
+
+  factory CloudFunctionTools() {
+    return _singleton;
+  }
+
+  CloudFunctionTools._internal();
+
+  Future<Map<String, dynamic>> callFunction(String functionName,
       {Map<String, dynamic> data}) async {
     final url =
         'https://europe-west1-gestion-trajets.cloudfunctions.net/$functionName';

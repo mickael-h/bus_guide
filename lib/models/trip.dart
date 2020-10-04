@@ -4,7 +4,6 @@ class Trip extends FetchedFBModel {
   String name;
   List<Stop> stops;
   Trip(Map<String, dynamic> data) {
-    print('new trip $data');
     try {
       name = data['name'] as String;
       stops = (data['stops'] as List)

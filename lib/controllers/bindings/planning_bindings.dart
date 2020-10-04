@@ -4,6 +4,8 @@ class PlanningBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<UserController>(() => UserController());
-    Get.lazyPut<PlanningController>(() => PlanningController());
+    Get.lazyPut<PlanningController>(
+      () => PlanningController(cloudFunctionTools: CloudFunctionTools()),
+    );
   }
 }

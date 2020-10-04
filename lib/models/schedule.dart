@@ -6,7 +6,6 @@ class Schedule extends FetchedFBModel {
   Trip trip;
   String name;
   Schedule(Map<String, dynamic> data) {
-    print('new schedule $data');
     try {
       isReversed = data['is_reversed'] as bool;
       name = data['name'] as String;

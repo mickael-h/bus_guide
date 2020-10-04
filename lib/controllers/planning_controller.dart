@@ -3,8 +3,11 @@ import 'package:bus_guide/index.dart';
 class PlanningController extends GetxController {
   final RxList<Planning> planningList = RxList<Planning>();
   final Rx<Planning> currentPlanning = Rx<Planning>();
+  final CloudFunctionTools cloudFunctionTools;
 
-  void fetchPlanningfor(DateTime date) async {
+  PlanningController({this.cloudFunctionTools});
+
+  Future<void> fetchPlanningfor(DateTime date) async {
     // Should work, but doesn't.
     // See: https://github.com/FirebaseExtended/flutterfire/issues/3290
     // final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
@@ -15,8 +18,8 @@ class PlanningController extends GetxController {
     // });
     // print('received value: ${result.data}');
     final formattedDate = formatDate(date, ['yyyy', '-', 'mm', '-', 'dd']);
-    final data = await CloudFunctionTools.callFunction('getPlanning',
-        data: {'date': formattedDate});
+    final data = await cloudFunctionTools
+        .callFunction('getPlanning', data: {'date': formattedDate});
     final plannings = _getPlanningsFromJSON(data);
     planningList.value = plannings;
   }
@@ -39,11 +42,15 @@ class PlanningController extends GetxController {
 
   List<Planning> _getPlanningsFromJSON(Map<String, dynamic> data) {
     final plannings = <Planning>[];
-    final planningObjs = data['plannings'] as List<Map<String, dynamic>>;
+    final planningObjs = data['plannings'] as List;
     for (var planObj in planningObjs) {
-      final planning = Planning(planObj);
-      if (!planning.hasError) {
-        plannings.add(planning);
+      if (planObj is Map<String, dynamic>) {
+        final planning = Planning(planObj);
+        if (!planning.hasError) {
+          plannings.add(planning);
+        } else {
+          print('planning has error: ${planning.errorMessage}');
+        }
       }
     }
     return plannings;
@@ -52,9 +59,13 @@ class PlanningController extends GetxController {
   void pickPlanning(Planning data) async {
     currentPlanning.value = data;
 
-    unawaited(Get.to(
-      MapScreen(),
-      binding: MapScreenBindings(),
-    ));
+    try {
+      unawaited(Get.to(
+        MapScreen(),
+        binding: MapScreenBindings(),
+      ));
+    } catch (e) {
+      print('Navigation error: $e');
+    }
   }
 }

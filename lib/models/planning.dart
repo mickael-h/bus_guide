@@ -7,7 +7,6 @@ class Planning extends FetchedFBModel {
   String generalComment;
   List<dynamic> locatedComments;
   Planning(Map<String, dynamic> data) {
-    print('new planning $data');
     try {
       date = Timestamp(
           data['date']['_seconds'] as int, data['date']['_nanoseconds'] as int);
