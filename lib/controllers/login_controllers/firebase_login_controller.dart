@@ -29,11 +29,15 @@ class FirebaseLoginController extends GetxController {
   }
 
   void _displayLoginError(Exception e) {
-    Get.defaultDialog(
-      title: 'Connection error',
-      middleText: 'Error code: ${e.toString()}',
-      textConfirm: 'OK',
-      onConfirm: navigator.pop,
-    );
+    try {
+      Get.defaultDialog(
+        title: 'Connection error',
+        middleText: 'Error code: ${e.toString()}',
+        textConfirm: 'OK',
+        onConfirm: navigator.pop,
+      );
+    } catch (e) {
+      print('Dialog error: $e');
+    }
   }
 }

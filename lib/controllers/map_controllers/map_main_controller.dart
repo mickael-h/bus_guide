@@ -16,8 +16,10 @@ class MapMainController extends GetxController {
 
   void _startPlanning(Planning planning) {
     Get.find<MarkersController>().setMarkersForTrip(planning?.schedule?.trip);
-    final firstStop = planning?.schedule?.trip?.stops[0];
-    setDestination(firstStop?.position);
+    final stops = planning?.schedule?.trip?.stops;
+    if (stops != null) {
+      setDestination(stops[0]?.position);
+    }
   }
 
   CameraPosition getCameraPosition() {
