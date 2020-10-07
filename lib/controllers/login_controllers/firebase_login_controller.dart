@@ -5,8 +5,7 @@ class FirebaseLoginController extends GetxController {
 
   FirebaseLoginController({this.auth});
 
-  Future<bool> connect() async {
-    final inputCtrlr = Get.find<LoginScreenController>();
+  Future<User> connect(String login, String password) async {
     try {
       UserCredential res;
       if (AppConfig.instance?.autoLogin != null) {
@@ -16,15 +15,14 @@ class FirebaseLoginController extends GetxController {
         );
       } else {
         res = await auth.signInWithEmailAndPassword(
-          email: inputCtrlr.login.value,
-          password: inputCtrlr.password.value,
+          email: login,
+          password: password,
         );
       }
-      Get.find<UserController>().fbUser.value = res?.user;
-      return true;
+      return res?.user;
     } catch (e) {
       _displayLoginError(e as Exception);
-      return false;
+      return null;
     }
   }
 

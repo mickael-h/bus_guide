@@ -43,15 +43,26 @@ void main() {
 
     when(cred.user.uid).thenReturn('testUid');
 
-    loginController.login.value = 'testLogin';
-    loginController.password.value = 'testWrongPassword';
-    expect(await firebaseController.connect(), false);
+    loginController.setLogin('testLogin');
+    loginController.setPassword('testWrongPassword');
+    expect(
+      await firebaseController.connect(
+        loginController.login.value,
+        loginController.password.value,
+      ),
+      null,
+    );
     expect(userController.fbUser.value, null);
 
-    loginController.login.value = 'testLogin';
-    loginController.password.value = 'testRightPassword';
-    expect(await firebaseController.connect(), true);
-    expect(userController.fbUser.value.uid, 'testUid');
+    loginController.setLogin('testLogin');
+    loginController.setPassword('testRightPassword');
+    expect(
+      await firebaseController.connect(
+        loginController.login.value,
+        loginController.password.value,
+      ),
+      cred.user,
+    );
     print('passed!');
   });
 }

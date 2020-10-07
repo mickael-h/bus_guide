@@ -7,6 +7,5 @@ class LoginBinding extends Bindings {
     Get.lazyPut<FirebaseLoginController>(
       () => FirebaseLoginController(auth: FirebaseAuth.instance),
     );
-    Get.lazyPut<UserController>(() => UserController());
   }
 }
