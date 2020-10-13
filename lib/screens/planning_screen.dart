@@ -10,7 +10,7 @@ class PlanningScreen extends GetView<PlanningController> {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(flex: 0, child: Calendar()),
+          Expanded(flex: 0, child: Calendar(key: ValueKey('calendar'))),
           Expanded(flex: 1, child: _getPlanningListView()),
         ],
       ),
