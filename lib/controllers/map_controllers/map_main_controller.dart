@@ -26,7 +26,7 @@ class MapMainController extends GetxController {
     return Get.find<PositioningController>().cameraPosition.value;
   }
 
-  Set<Marker> getMarkers() {
+  RxSet<Marker> getMarkers() {
     return Get.find<MarkersController>().markers;
   }
 
@@ -34,8 +34,8 @@ class MapMainController extends GetxController {
     Get.find<RoutingController>().setDestination(to);
   }
 
-  Iterable<Polyline> getPolylines() {
-    return Get.find<RoutingController>().polylines.values;
+  RxMap<PolylineId, Polyline> getPolylines() {
+    return Get.find<RoutingController>().polylines;
   }
 
   @override

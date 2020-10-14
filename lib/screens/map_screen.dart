@@ -14,7 +14,7 @@ class MapScreen extends GetView<MapMainController> {
           initialCameraPosition: controller.getCameraPosition(),
           myLocationButtonEnabled: true,
           myLocationEnabled: true,
-          polylines: Set<Polyline>.of(controller.getPolylines()),
+          polylines: Set<Polyline>.of(controller.getPolylines().values),
           onMapCreated: controller.onMapCreated,
           markers: controller.getMarkers(),
         ),
