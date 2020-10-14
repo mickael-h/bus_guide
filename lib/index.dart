@@ -36,7 +36,6 @@ export 'models/stop.dart';
 export 'models/schedule.dart';
 export 'models/fetched_fb_model.dart';
 export 'models/planning.dart';
-export 'package:get_storage/get_storage.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:table_calendar/table_calendar.dart';
 export 'package:flutter_polyline_points/flutter_polyline_points.dart';
