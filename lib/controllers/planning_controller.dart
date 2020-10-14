@@ -20,8 +20,12 @@ class PlanningController extends GetxController {
     final formattedDate = formatDate(date, ['yyyy', '-', 'mm', '-', 'dd']);
     final data = await cloudFunctionTools
         .callFunction('getPlanning', data: {'date': formattedDate});
-    final plannings = _getPlanningsFromJSON(data);
-    planningList.value = plannings;
+    if (data != null) {
+      final plannings = _getPlanningsFromJSON(data);
+      planningList.value = plannings;
+    } else {
+      planningList.value = [];
+    }
   }
 
   List<Map<String, dynamic>> getTimedStops() {
